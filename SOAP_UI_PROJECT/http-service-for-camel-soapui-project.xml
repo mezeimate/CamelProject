@@ -7,7 +7,7 @@
       "username" : "mekkmester",\r
       "password" : "fvm4m3öv9mf23ö4"\r
    }\r
-}</con:request><con:originalUri>http://localhost/accountcreation</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder/></con:request></con:method></con:resource></con:interface><con:restMockService id="657b096c-4d0c-4102-ab70-bb87442e0fb1" port="8091" path="/" host="DESKTOP-4LEV2PF" name="REST MockService 1" docroot=""><con:settings/><con:properties/><con:restMockAction name="/accountcreation" method="GET" resourcePath="/accountcreation" id="6a5667e2-b4d3-41ef-90c9-616f63ea2aae"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath>/*&#13;
+}</con:request><con:originalUri>http://localhost/accountcreation</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/><con:parameterOrder/></con:request></con:method></con:resource></con:interface><con:restMockService id="657b096c-4d0c-4102-ab70-bb87442e0fb1" port="8091" path="/" host="192.168.56.1" name="REST MockService 1" docroot=""><con:settings/><con:properties/><con:restMockAction name="/accountcreation" method="GET" resourcePath="/accountcreation" id="6a5667e2-b4d3-41ef-90c9-616f63ea2aae"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath>/*&#13;
 // Script dispatcher is used to select a response based on the incoming request.&#13;
 // Here are few examples showing how to match based on path, query param, header and body&#13;
 &#13;
@@ -123,4 +123,58 @@ if( requestBody.contains("some data") )&#13;
 	"firstName": "Elek",
 	"age": 31,
 	"username": "mekkmester"
+}</con:responseContent></con:response></con:restMockAction><con:restMockAction name="/api/v1/bookreview/3" method="DELETE" resourcePath="/api/v1/bookreview/3" id="3d2a662c-8f3f-4f92-8260-b56d11873661"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:dispatchPath>/*&#13;
+// Script dispatcher is used to select a response based on the incoming request.&#13;
+// Here are few examples showing how to match based on path, query param, header and body&#13;
+&#13;
+// Match based on path&#13;
+def requestPath = mockRequest.getPath()&#13;
+log.info "Path: "+ requestPath&#13;
+&#13;
+if( requestPath.contains("json") )&#13;
+{&#13;
+    // return the name of the response you want to dispatch&#13;
+    return "JSON Response"&#13;
+}&#13;
+&#13;
+&#13;
+// Match based on query parameter&#13;
+def queryString = mockRequest.getRequest().getQueryString()&#13;
+log.info "QueryString: " + queryString&#13;
+&#13;
+if( queryString.contains("stockholm") )&#13;
+{&#13;
+    // return the name of the response you want to dispatch&#13;
+    return "Response Stockholm"&#13;
+}&#13;
+else if( queryString.contains("london") )&#13;
+{&#13;
+    // return the name of the response you want to dispatch&#13;
+    return "Response London"&#13;
+}&#13;
+&#13;
+&#13;
+// Match based on header&#13;
+def acceptEncodingHeaderList = mockRequest.getRequestHeaders().get("Accept-Encoding")&#13;
+log.info "AcceptEncoding Header List: " + acceptEncodingHeaderList&#13;
+&#13;
+if( acceptEncodingHeaderList.contains("gzip,deflate") )&#13;
+{&#13;
+    // return the name of the response you want to dispatch&#13;
+    return "GZiped Response"&#13;
+}&#13;
+&#13;
+&#13;
+// Match based on body&#13;
+def requestBody = mockRequest.getRequestContent()&#13;
+log.info "Request body: " + requestBody&#13;
+&#13;
+if( requestBody.contains("some data") )&#13;
+{&#13;
+    // return the name of the response you want to dispatch&#13;
+    return "Response N"&#13;
+}&#13;
+*/&#13;
+</con:dispatchPath><con:response name="Response 1" id="05721007-f5e8-45e7-b68f-2bf26168720c" httpResponseStatus="204" mediaType="application/json"><con:settings/><con:responseContent>{
+	"hehe": "hehe"
 }</con:responseContent></con:response></con:restMockAction></con:restMockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
