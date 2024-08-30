@@ -1,0 +1,22 @@
+logging:
+  level:
+    org:
+      apache:
+        camel:
+          component:
+            servlet: DEBUG
+      springframework:
+        web: TRACE
+    root: INFO
+spring:
+  activemq:
+    broker-url: 'tcp://localhost:61616'
+  artemis:
+    user: admin
+    password: admin
+    mode: native
+message:
+  inputQueue: TEST_IN
+  outputQueue: TEST_OUT
+backendService:
+  url: 'http://localhost:8091/accountcreation?httpMethod=POST'

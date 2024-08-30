@@ -6,14 +6,25 @@ import com.middleware.CamelProject.model.User;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ArtemisQRestRouteBuilder extends RouteBuilder {
 
+    @Value("${message.inputQueue}")
+    private String inputQueue;
+
+    @Value("${message.outputQueue}")
+    private String outputQueue;
+
+    @Value("${backendService.url}")
+    private String backendUrl;
+
     @Override
     public void configure() {
-        from("jms:queue:TEST_IN").routeId("generate-route")
+        from("jms:queue:" + inputQueue ).routeId("generate-route")
                 .streamCaching()
 
                 .log("Input JSON Message: ${body}")
@@ -38,17 +49,17 @@ public class ArtemisQRestRouteBuilder extends RouteBuilder {
 
                 .log("Transformed JSON Message: ${body}")
 
-                .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
+                .setHeader(Exchange.CONTENT_TYPE, constant(MediaType.APPLICATION_JSON_VALUE))
                 .convertBodyTo(String.class)
 
-                .to("http://localhost:8091/accountcreation?httpMethod=POST")
+                .to(backendUrl)
 
                 .log("HTTP Response Message: ${body}")
 
-                .to("jms:queue:TEST_OUT");
+                .to("jms:queue:" + outputQueue);
 
 
-        from("jms:queue:TEST_OUT").routeId("receive-route")
+        from("jms:queue:" + outputQueue ).routeId("receive-route")
                 .log("OUT Queue message: ${body}");
 
     }
